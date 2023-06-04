@@ -1,0 +1,36 @@
+Att göra -
+
+    - query Transaction
+    - hasha lösenord
+    - skapa 10 användare/var sitt swoshKonto/ några transaktioner
+
+        När det gäller att kryptera känslig data som lösenord i en databas,
+        är en vanlig praxis att använda en kombination av hashning och salts.
+
+Hashning:
+    Istället för att lagra lösenordet i klartext lagras en hashad version av
+    lösenordet i databasen. En hashfunktion är en algoritm som tar in en
+    sträng (lösenordet) och genererar en unik sträng av en fast längd (hashvärdet).
+    Hashfunktioner är envägsfunktioner, vilket innebär att det inte går att reversera
+    hashvärdet för att få tillbaka det ursprungliga lösenordet.
+
+Salt:
+    En salt är en slumpmässig sträng som läggs till lösenordet innan det hashas.
+    Salten används för att förhindra att två identiska lösenord genererar samma hashvärde.
+    Varje användare har en unik salt som lagras tillsammans med deras lösenord i databasen.
+
+        När en användare registrerar sig:
+
+    -   Generera en slumpmässig salt för användaren.
+    -   Kombinera lösenordet med saltet.
+    -   Hasha den resulterande strängen.
+    -   Spara det hashade lösenordet och saltet i databasen för användaren.
+
+        När en användare loggar in:
+
+    -   Hämta användarens salt från databasen.
+    -   Kombinera det angivna lösenordet med saltet.
+    -   Hasha den resulterande strängen.
+    -   Jämför det hashade lösenordet med det lagrade hashvärdet i databasen.
+    -   Om hashvärdena matchar, är lösenordet korrekt och användaren kan logga in.
+    -   Genom att använda en kombination av hashning och salts minskar risken för att lösenord avslöjas även om databasen skulle bli komprometterad. Det är viktigt att använda en stark hashfunktion och en unik salt för varje användare för att förbättra säkerheten. I Java finns olika bibliotek och metoder för att hantera kryptering och hashning, till exempel BCrypt och MessageDigest-klassen för hashning.
